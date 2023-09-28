@@ -27,3 +27,26 @@ for(let i=0;i<items.length;i++){
 
 var li = document.getElementsByTagName("li");
 console.log(li[4].innerText);
+
+var qs = document.querySelector(".title");
+console.log(qs);
+
+var qsa = document.querySelectorAll(".title");
+console.log(qsa);
+
+var submit = document.querySelector('input[type="submit"]');
+submit.value = "SEND";
+
+var seconditem = document.querySelector(".list-group-item:nth-child(2)");
+seconditem.style.backgroundColor = "green";
+
+var thirditem = document.querySelector(".list-group-item:nth-child(3)");
+thirditem.style.display = "none";
+
+var odd = document.querySelectorAll("li:nth-child(odd)");
+var even = document.querySelectorAll("li:nth-child(even)");
+
+for(var i=0;i<odd.length;i++){
+    odd[i].style.backgroundColor = "green"; 
+    even[i].style.backgroundColor = "white";
+}
