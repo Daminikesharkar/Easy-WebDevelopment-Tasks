@@ -36,12 +36,18 @@ document.addEventListener("DOMContentLoaded", function() {
         var btn = document.createElement("button");
         btn.className = "btn delete";
 
+        var editBtn = document.createElement("button");
+        editBtn.className = "btn edit";
+
         var text = document.createTextNode("Username: "+name+" Email: "+email);
         li.appendChild(text);
 
 
         btn.appendChild(document.createTextNode("Delete"));
         li.appendChild(btn);
+
+        editBtn.appendChild(document.createTextNode("Edit"));
+        li.appendChild(editBtn);
 
         newUserList.appendChild(li);        
     }
@@ -65,9 +71,32 @@ document.addEventListener("DOMContentLoaded", function() {
                 const emailRegex = /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/g;
                 const key = text.match(emailRegex);
                 localStorage.removeItem(key);
-                console.log(key);
                 ul.removeChild(li);
         }  
+    }
+
+    var ulEdit = document.getElementById("newusers");
+    ulEdit.addEventListener("click",edituser);
+
+    function edituser(e){
+        if(e.target.classList.contains("edit")){
+
+            var li = e.target.parentElement;
+            var text = li.firstChild.textContent;
+            const emailRegex = /[\w._%+-]+@[\w.-]+\.[a-zA-Z]{2,4}/g;
+            const key = text.match(emailRegex);   
+            
+            var uname = text.split(" ");
+            
+            var username = document.getElementById("username");
+            var email = document.getElementById("email");
+
+            username.value = uname[1];
+            email.value = key;
+
+            localStorage.removeItem(key);
+            ul.removeChild(li);
+        }
     }
     
     window.addEventListener("load",() =>{
