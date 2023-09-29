@@ -6,6 +6,8 @@ body{
 }
 .Main-container{
     display: flex;
+    flex-direction: column;
+    gap: 20px;
     justify-content: center;
     height: 100vh;
     align-items: center;
@@ -56,4 +58,22 @@ button:hover{
     background-color: #6a889b;
     font-size: 22px;
     color: rgb(197, 197, 233);
+}
+.display-users{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.userList{
+    color: #3e5c69;
+    list-style-type: none;
+}
+.btn{
+    width: 60px;
+    font-size: 15px;
+    height: 22px;
+    margin-left: 4px;
+}
+.btn:hover{
+    font-size: 16px;
 }
