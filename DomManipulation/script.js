@@ -50,3 +50,58 @@ for(var i=0;i<odd.length;i++){
     odd[i].style.backgroundColor = "green"; 
     even[i].style.backgroundColor = "white";
 }
+
+
+//ParentNode and childNode
+var items = document.querySelector("#items");
+console.log(items.parentNode);
+console.log(items.childNodes);
+console.log(items.parentNode.parentNode);
+
+//ParentElement
+console.log(items.parentElement);
+
+//children
+console.log(items.children);
+console.log(items.children[2]);
+
+//first child and first element child
+console.log(items.firstChild);
+console.log(items.firstElementChild);
+
+//last child and last element child
+console.log(items.lastChild);
+console.log(items.lastElementChild);
+
+//next sibling and next element sibling
+console.log(items.nextSibling);
+console.log(items.nextElementSibling);
+
+//previous sibling and previoselement sibling
+console.log(items.previousSibling);
+console.log(items.previousElementSibling);
+
+
+//creating new element
+var newDiv = document.createElement("div");
+newDiv.className = "new-div";
+newDiv.id = "newdiv";
+newDiv.setAttribute("title","new div");
+
+var text = document.createTextNode("Hello world");
+newDiv.appendChild(text);
+
+var h2 = document.querySelector('h1');
+var container = document.querySelector('.container');
+
+container.insertBefore(newDiv,h2);
+
+//adding text before item 1
+
+var newItem = document.createElement("li");
+newItem.className = "list-group-item";
+var text2 = document.createTextNode("Hello world");
+newItem.appendChild(text2);
+console.log(newItem);
+
+container.insertBefore(newItem,h2);
