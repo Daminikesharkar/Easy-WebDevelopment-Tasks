@@ -21,8 +21,7 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log(userData);
 
         const userDataJson = JSON.stringify(userData);
-        localStorage.setItem("UserData",userDataJson);
-
+        localStorage.setItem(userData.email,userDataJson);
         form.reset();
     });
 });
