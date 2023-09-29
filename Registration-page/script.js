@@ -13,6 +13,16 @@ document.addEventListener("DOMContentLoaded", function() {
         console.log("Email:", email);
         console.log("Password:", password);
 
+        const userData = {
+            name : username,
+            email : email,
+            password : password
+        };
+        console.log(userData);
+
+        const userDataJson = JSON.stringify(userData);
+        localStorage.setItem("UserData",userDataJson);
+
         form.reset();
     });
 });
