@@ -15,20 +15,20 @@
         <div class="inner-container">
             <h1>Expense Tracker</h1>
             <form id="expensetracker">
-                <label>Choose expenseamount</label>
-                <input type="number" name="expenseamount" id="expenseamount" placeholder="Enter expense amount" required/>
+                <label class="form-label">Choose expenseamount</label>
+                <input class="form-control" type="number" name="expenseamount" id="expenseamount" placeholder="Enter expense amount" required/>
 
-                <label>Choose discription</label>
-                <input type="text" id="discription" name="discription" placeholder="Enter a discription" required>
+                <label class="form-label">Choose discription</label>
+                <input class="form-control" type="text" id="discription" name="discription" placeholder="Enter a discription" required>
             
-                <label>Choose a category</label>
-                <select id="category" name="category">
+                <label class="form-label">Choose a category</label>
+                <select class="form-select" id="category" name="category">
                     <option value="food">Food</option>
                     <option value="movie">Movie</option>
                     <option value="electricity">Electricity</option>
                     <option value="fuel">Fuel</option>
                   </select>
-                <button type="submit">Add Expense</button>
+                <button class ="btn btn-dark mt-3" type="submit">Add Expense</button>
             </form>
         </div>
         <div class="display-expenses">

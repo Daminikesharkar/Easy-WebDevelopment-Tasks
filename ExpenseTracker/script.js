@@ -32,10 +32,10 @@ function addUsers(expenseamount,discription,category){
     li.className="expenseList";
 
     var btn = document.createElement("button");
-    btn.className = "btn delete";
+    btn.className = "btn btn-outline-dark m-2 delete";
 
     var editBtn = document.createElement("button");
-    editBtn.className = "btn edit";
+    editBtn.className = "btn btn-outline-dark m-2 edit";
 
     var text = document.createTextNode("Expenseamount: "+expenseamount+" Discription: "+discription+" Category: "+category);
     li.appendChild(text);
