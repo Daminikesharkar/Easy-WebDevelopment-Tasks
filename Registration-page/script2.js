@@ -49,18 +49,26 @@ document.addEventListener("DOMContentLoaded", function() {
     
     async function updateData(email){
         let id = await getDataByKey(email)
+
+        const username = document.getElementById("username").value;
+        const email_id = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+
         const updateData = {
-            username: 'Damini',
-            email: 'damini@gmail.com'
+            name: username,
+            email: email_id,
+            password : password
         }
-        try{
-            let responseData = await axios.put(`https://crudcrud.com/api/f09dd60c95be4a1b88486075d2d45ea2/appointmentData/${id}`,updateData)
-            console.log(responseData)
-    
-        }catch(error){
-            console.log(error)
-        }
-    
+
+        form.addEventListener("submit", async function(event){
+            try{
+                let responseData = await axios.put(`https://crudcrud.com/api/f09dd60c95be4a1b88486075d2d45ea2/appointmentData/${id}`,updateData)
+                console.log(responseData)
+        
+            }catch(error){
+                console.log(error)
+            }
+        });    
     }
 
     const form = document.getElementById("registration");
