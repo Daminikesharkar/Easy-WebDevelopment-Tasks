@@ -9,30 +9,44 @@
 	</head>
 	<body>
         <div class="outer-container">
-		<div class="container">
-			<h1>ADD TASKS</h1>
-			<div class="task-input">
-				<label class="form-label">Choose Price</label><br>
-				<input type="number" id="add-price" name="todo" placeholder="Add price..."><br>
-
-				<label class="form-label">Choose Dish</label><br>
-				<input type="text" id="add-dish" name="todo" placeholder="Add dish..."><br>
-				
-                <label class="form-label">Choose a Table</label><br>
-                <select class="form-select" id="table" name="table"><br>
-                    <option value="table1">Table 1</option>
-                    <option value="table2">Table 2</option>
-                    <option value="table3">Table 3</option>
-                </select><br>
-				<input type="button" value="ADD"  id="add-btn">
-			</div>
-			<div id="new-tasks">
-                <!-- <div></div> -->
-				<h3 id="table1div">Table 1</h3>
-				<h3 id="table2div">Table 2</h3>
-				<h3 id="table3div">Table 3</h3>
-			</div>
-		</div>
+            <div class="container">
+                <div class="task-input">
+                    <!-- <h1>ADD ORDERS</h1> -->
+                    <form id="orders">
+                        <label for="add-price" class="form-label">Choose Price</label>
+                        <input type="number" id="add-price" name="price" placeholder="Add price..." required/>
+        
+                        <label for="add-dish" class="form-label">Choose Dish</label>
+                        <input type="text" id="add-dish" name="dish" placeholder="Add dish..." required>
+                    
+                        <label for="table" class="form-label">Choose a Table</label>
+                        <select class="form-select" id="table" name="table"><br>
+                            <option value="table1">Table 1</option>
+                            <option value="table2">Table 2</option>
+                            <option value="table3">Table 3</option>
+                        </select>                
+                        <button id="add-btn" type="submit">ADD ORDER</button>
+                    </form>
+                </div>
+                <div id="new-tasks" class="tasks">
+                                        
+                    <h3>Table 1</h3>
+                    <ul id="table1ul"></ul>
+                    <br>
+                    <hr/>
+                    <br>
+                   
+                    <h3>Table 2</h3>
+                    <ul id="table2ul"></ul>
+                    <br>
+                    <hr/>
+                    <br>
+                    
+                    <h3>Table 3</h3>
+                    <ul id="table3ul"></ul>
+                                        
+                </div>
+		    </div>
         </div>
 
 		<script type="module" src="script.js"></script>

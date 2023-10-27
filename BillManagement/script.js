@@ -1,164 +1,150 @@
 import axios from 'https://cdn.jsdelivr.net/npm/axios@1.5.1/+esm'
-document.addEventListener('DOMContentLoaded', function() { 
-       
-    //post data into crudcrud
-    async function postData(data){
-        try {
-            let response = await axios.post('https://crudcrud.com/api/344c530f8712499fb5b15435ddbc3df0/data',data);
-            console.log(response.data);
 
+let count = 1;
+let url = 'https://crudcrud.com/api/bb1c08231616404fa9c7308c7699df6e/orders';
+
+document.addEventListener('DOMContentLoaded',()=>{
+
+    async function postData(userData){
+        try {
+            const response = await axios.post(url,userData);
+            console.log(response.status);
         } catch (error) {
             console.log(error);
         }
     }
 
-    async function getSingleEntry(data){
+    async function getId(key){
         try {
-            let response = await axios.get('https://crudcrud.com/api/344c530f8712499fb5b15435ddbc3df0/data');
-            console.log("innn",response.data)
-            const matchingId = response.data.find(item => item.priceAdded === data);
-            console.log(matchingId._id);
+            const response = await axios.get(url);
+            const matchingId = response.data.find(item => item.id === key);
+            console.log(matchingId);
             return matchingId._id;
-            
         } catch (error) {
             console.log(error);
         }
     }
 
-    //delete from crudcrud
-    async function deleteData(data){
-        // console.log("data -->",data,data.dishAdded)
-        let id = await getSingleEntry(data);
+    async function deleteData(key){
         try {
-            let response = await axios.delete(`https://crudcrud.com/api/344c530f8712499fb5b15435ddbc3df0/data/${id}`);
-            console.log(response.data);
+            let id = await getId(key);
+            console.log(id);
+            const response = await axios.delete(url+`/${id}`);
+            console.log(response.status);
         } catch (error) {
-            console.log(error)
+            console.log(error);
         }
     }
 
-    //access elements
-    const addBtn = document.getElementById('add-btn');
-    const addPriceInput = document.getElementById('add-price');
-    const addDishInput = document.getElementById('add-dish');
-    const tableInput = document.getElementById('table');
-    let userdata= {}
+    const form = document.getElementById('orders');
 
-    addBtn.addEventListener("click",async ()=>{
-        let priceAdded = addPriceInput.value;
-        let dishAdded = addDishInput.value;
-        let tableAdded = tableInput.value;
-
-        userdata = {
-            priceAdded: priceAdded,
-            dishAdded: dishAdded,
-            tableAdded: tableAdded
-        }
+    //getting input fields into variable
+    const price = document.getElementById("add-price");
+    const dish = document.getElementById("add-dish");
+    const table = document.getElementById("table");
     
-        if (priceAdded=='' || dishAdded == '' || tableAdded == ''){
-            alert('No task is added ')
-        }else{
-            console.log(userdata);
-            await postData(userdata);
-            addBill(userdata);
-        }        
+
+    //adding submit event listner to the form
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        let priceValue = price.value;
+        let dishValue = dish.value;
+        let tableValue = table.value;
+        
+
+        const userData = {
+            id: count,
+            priceValue: priceValue,
+            dishValue: dishValue,
+            tableValue: tableValue,
+        }
+        count++;
+        postData(userData);
+        addOrder(userData);
+        form.reset();
+        console.log(userData);       
     })
 
+    //add order according to tables
+    function addOrder(userData){
 
-    //adding note to UI
-    function addBill(userdata){
-                
-        const mainDiv = document.getElementById('new-tasks');
-        let tablediv = document.getElementById('table1div');
+        let whichTable = "";
+        let tableUl = "";
 
-        if(userdata.tableAdded == 'table1'){
-           tablediv = document.getElementById('table1div');
-        }else if(userdata.tableAdded == 'table2'){
-            tablediv = document.getElementById('table2div');
-        }else{
-            tablediv = document.getElementById('table3div');
+        //get div according to table
+        if(userData.tableValue === 'table1'){
+            console.log("yes1");
+            whichTable = userData.tableValue;
+            tableUl = document.getElementById('table1ul')
+
+        }else if(userData.tableValue === 'table2'){
+            console.log("yes2");
+            whichTable = userData.tableValue;
+            tableUl = document.getElementById('table2ul')
+        }else if(userData.tableValue === 'table3'){
+            console.log("yes3");
+            whichTable = userData.tableValue;
+            tableUl = document.getElementById('table3ul')
         }
 
-        const divInner = document.createElement('div');
-        const inputField1 = document.createElement('input');
-        const inputField2 = document.createElement('input');    
-        const editBtn = document.createElement('button');
-        const deleteBtn = document.createElement('button');
+        const orderList = document.createElement('li');
+        orderList.className = whichTable;
+        orderList.setAttribute('data-user-data', JSON.stringify(userData));
+        orderList.style.marginBottom = "10px";
+        orderList.style.marginLeft="20px";
 
-        divInner.id = "innerdiv";
-        inputField1.class = 'addednote';
-        inputField1.id = 'addednoteid';
-        inputField1.value = userdata.priceAdded;
-        inputField1.disabled = true;
+        const text = document.createTextNode("Id: "+userData.id+" Dish: "+userData.dishValue+" Price: "+userData.priceValue);
 
-        inputField2.value = userdata.dishAdded;
-        inputField2.class = 'addednote';
-        inputField2.id = 'addednoteid';
-        inputField2.disabled = true;
+        const deleteButton = document.createElement("button");
+        deleteButton.className = "delete";
+        orderList.setAttribute('data-user-data', JSON.stringify(userData));
+        deleteButton.style.width="70px";
+        deleteButton.style.height="30px"
+        deleteButton.style.marginLeft="20px";
+        
+        deleteButton.appendChild(document.createTextNode("Delete"));
+        orderList.appendChild(text);
+        orderList.appendChild(deleteButton);
 
-        editBtn.class = 'editnote';
-        deleteBtn.class = 'deletenote';
-
-        let textNode = document.createTextNode(userdata.priceAdded);
-        inputField1.appendChild(textNode);
-        let textNode2 = document.createTextNode(userdata.dishAdded);
-        inputField2.appendChild(textNode2);
-
-        editBtn.appendChild(document.createTextNode("edit"));
-        deleteBtn.appendChild(document.createTextNode("delete"));
-
-        divInner.appendChild(inputField1);       
-        divInner.appendChild(inputField2); 
-        divInner.appendChild(editBtn);
-        divInner.appendChild(deleteBtn);
-
-        tablediv.appendChild(divInner);
-        mainDiv.appendChild(tablediv);
+        tableUl.appendChild(orderList);        
     }
 
-    //deleting and editing note
-    let parentDiv = document.getElementById('new-tasks');
-    parentDiv.addEventListener("click",modifyNote)
-
-    let tableDiv = document.getElementById('table1div');
-    async function modifyNote(e){
-        if(e.target.class == 'deletenote'){ 
-            if(userdata.tableAdded == 'table1'){
-                tableDiv = document.getElementById('table1div');
-            }else if(userdata.tableAdded == 'table2'){
-                tableDiv = document.getElementById('table2div');
-            }else{
-                tableDiv = document.getElementById('table3div');
-            }
-
-            const div = e.target.parentElement; 
-            let value = div.firstChild.value;  
-            console.log(value);  
-            tableDiv.removeChild(div);       
-            await deleteData(value);
+    const orderUl = document.getElementById('new-tasks');
+    orderUl.addEventListener("click",(e)=>{
+        if(e.target.classList.contains('delete')){
+            let li = e.target.parentElement;
+            let userData = JSON.parse(li.getAttribute('data-user-data')); 
+            let key = userData.id; 
             
-        }          
-    }
+            deleteData(key);
+            li.remove();          
+        }
+    })
 
     async function displayOrders(){
         try {
-            let response = await axios.get('https://crudcrud.com/api/344c530f8712499fb5b15435ddbc3df0/data');
+            const response = await axios.get(url);
             let length = Object.keys(response.data).length;
-            
+
             for(let i=0;i<length;i++){
-                let data = response.data[i];
-                console.log(data)
-                addBill(data);
+                const data = response.data[i];
+                addOrder(data);
+                count = data.id;
             }
-            
+
+            if(length === 0){
+                count = 1;
+            }else{
+                count++;
+            }  
+
         } catch (error) {
             console.log(error);
         }
     }
 
-
-    window.addEventListener("load",()=>{
+    window.addEventListener('load',()=>{
         displayOrders();
     })
 })
-
