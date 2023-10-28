@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Appointment Booking Form</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Croissant+One&family=Signika+Negative&display=swap" rel="stylesheet">
+    
+</head>
+
+<body>
+    <div class="Main-container">
+        <div class="inner-container">
+            <h1>Registration Form    </h1>
+            <form id="registration">
+                <label>Username</label>
+                <input type="text" name="username" id="username" placeholder="Enter your name" required/>
+
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" placeholder="Enter email address" required>
+            
+                <label for="password">Password</label>
+                <input type="password" id="password" name="password" placeholder="Enter password" required>
+            
+                <button type="submit">Submit</button>
+            </form>
+        </div>
+        <div class="display-users">
+            <ul class="users" id="newusers">                
+            </ul>
+        </div>
+    </div>  
+    <script type="module" src="script2.js"></script>  
+</body>
+</html>

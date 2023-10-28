@@ -1,0 +1,79 @@
+body{
+    margin: 0px;
+    padding: 0px;
+    font-family: 'Croissant One', cursive;
+    font-family: 'Signika Negative', sans-serif;
+}
+.Main-container{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    justify-content: center;
+    height: 100vh;
+    align-items: center;
+    background-image: url(background-image.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+.inner-container{
+    height: 50vh;
+    width: 50vh;      
+    border: 1px solid #6a889b;
+    padding: 20px;
+    border-radius: 12px;
+}
+h1{    
+    color: #6a889b;
+    margin: 0px;
+}
+label{
+    display: block;
+    margin-top: 20px;
+    font-size: 20px;
+    color: #6a889b;
+}
+input{
+    width: 100%;
+    height: 40px;
+    padding: 0px;
+    margin-bottom: 10px;
+    border: none;
+    border-bottom: 2px solid #ADC4CE;
+    background: transparent;
+}
+input::placeholder{
+    font-size: 13px;
+    color: rgb(158, 187, 192);
+}
+button{
+    width: 100%; 
+    height: 40px;
+    border-radius: 5px;
+    border: none; 
+    font-size: 20px; 
+    color: #6a889b;  
+    background-color: #ADC4CE;
+}
+button:hover{
+    background-color: #6a889b;
+    font-size: 22px;
+    color: rgb(197, 197, 233);
+}
+.display-users{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+.userList{
+    color: #3e5c69;
+    list-style-type: none;
+}
+.btn{
+    width: 60px;
+    font-size: 15px;
+    height: 22px;
+    margin-left: 4px;
+}
+.btn:hover{
+    font-size: 16px;
+}
