@@ -1,104 +1,121 @@
-const form = document.getElementById("expensetracker");
+let count = 1;
+document.addEventListener(('DOMContentLoaded'),()=>{
 
-form.addEventListener("submit", function(event) {
-    event.preventDefault(); 
+    function addDataToLocalStorage(id,jsonData){
+        try {
+            localStorage.setItem(id,jsonData);            
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
-        const amount = document.getElementById("expenseamount").value;
-        const disctiption = document.getElementById("discription").value;
-        const category = document.getElementById("category").value;
+    function removeDataFromLocalStrorage(id){
+        try {
+            localStorage.removeItem(id);
+            
+        } catch (error) {
+            console.log(error);
+        }
 
+    }
 
-        console.log("expenseamount:", amount);
-        console.log("discription:", disctiption);
-        console.log("category:", category);
+    const form = document.getElementById('expensetracker');
+    const expenseamount = document.getElementById('expenseamount');
+    const discription = document.getElementById('discription');
+    const category = document.getElementById('category');
+
+    form.addEventListener('submit',(e)=>{
+        e.preventDefault();
+
+        let expenseamountValue = expenseamount.value;
+        let discriptionValue = discription.value;
+        let categoryVal = category.value;
 
         const userData = {
-            expenseamount : amount,
-            discription : disctiption,
-            category : category
-        };
+            id:count,
+            expenseamountValue: expenseamountValue,
+            discriptionValue: discriptionValue,
+            categoryVal:categoryVal,
+        }
+        count++;
+        const userDataJson = JSON.stringify(userData);   
         
-        const userDataJson = JSON.stringify(userData);
-        localStorage.setItem(userData.expenseamount,userDataJson);
+        addDataToLocalStorage(userData.id,userDataJson);
+        addExpense(userData);
         form.reset();
-
-        addUsers(userData.expenseamount,userData.discription,userData.category);
-});
-function addUsers(expenseamount,discription,category){
-
-    var newUserList = document.getElementById("newexpense");
-
-    var li = document.createElement("li");
-    li.className="expenseList";
-
-    var btn = document.createElement("button");
-    btn.className = "btn btn-outline-dark m-2 delete";
-
-    var editBtn = document.createElement("button");
-    editBtn.className = "btn btn-outline-dark m-2 edit";
-
-    var text = document.createTextNode("Expenseamount: "+expenseamount+" Discription: "+discription+" Category: "+category);
-    li.appendChild(text);
+    })
 
 
-    btn.appendChild(document.createTextNode("Delete"));
-    li.appendChild(btn);
+    function addExpense(userData){
 
-    editBtn.appendChild(document.createTextNode("Edit"));
-    li.appendChild(editBtn);
+        const ulList = document.getElementById('newexpense');
 
-    newUserList.appendChild(li);        
-}
+        const li = document.createElement('li');
+        li.className = "expenseList";
+        li.setAttribute('data-user-data', JSON.stringify(userData));
 
-var ul = document.getElementById("newexpense");
-ul.addEventListener("click",deleteUser);
+        const text = document.createTextNode("Expenseamount: "+userData.expenseamountValue+" Discription: "+userData.discriptionValue+" Category: "+userData.categoryVal);
 
-function deleteUser(e){    
-    if(e.target.classList.contains("delete")){            
-        var li = e.target.parentElement;
-        var text = li.firstChild.textContent;
-        var texts = text.split(" ");
-        const key = texts[1];
-        localStorage.removeItem(key);
-        ul.removeChild(li);
-    }  
-}
+        const deleteButton = document.createElement('button');
+        deleteButton.classList = "delete";
 
+        const editButton = document.createElement('button');
+        editButton.classList = "edit";
 
-var ulEdit = document.getElementById("newexpense");
-ulEdit.addEventListener("click",edituser);
+        li.appendChild(text);
+        deleteButton.appendChild(document.createTextNode('delete'));
+        editButton.appendChild(document.createTextNode('edit'));
 
-function edituser(e){
-    if(e.target.classList.contains("edit")){
+        li.appendChild(deleteButton);
+        li.appendChild(editButton);
 
-        var li = e.target.parentElement;
-        var text = li.firstChild.textContent;
-
-        var texts = text.split(" ");
-        const key = texts[1];
-                        
-        var expenseamount = document.getElementById("expenseamount");
-        var disctiption = document.getElementById("discription");
-        var category = document.getElementById("category");
-
-        expenseamount.value = key;
-        disctiption.value = texts[3];
-        category.value = texts[5]
-
-        localStorage.removeItem(key);
-        ul.removeChild(li);
+        ulList.appendChild(li);
     }
-}
 
-function displayUsers(){        
-    for(var i=0;i<localStorage.length;i++){
-        const key = localStorage.key(i); 
-        const value = JSON.parse(localStorage.getItem(key));
-        addUsers(value.expenseamount,key);
-        console.log(key,value.discription,value.category);        
+
+    const ulList = document.getElementById("newexpense");
+    ulList.addEventListener('click',(e)=>{
+        if(e.target.classList.contains('delete')){
+            const li = e.target.parentElement;                        
+            const userData = JSON.parse(li.getAttribute('data-user-data'))
+            
+            removeDataFromLocalStrorage(userData.id);
+            li.remove();
+        }
+        if(e.target.classList.contains('edit')){
+            const liEdit = e.target.parentElement;
+            const userEditData = JSON.parse(liEdit.getAttribute('data-user-data'));
+
+            let expenseamount = document.getElementById('expenseamount');
+            let discription = document.getElementById("discription");
+            let category = document.getElementById("category");
+
+            expenseamount.value = userEditData.expenseamountValue;
+            discription.value = userEditData.discriptionValue;
+            category.value = userEditData.categoryVal;
+
+            removeDataFromLocalStrorage(userEditData.id);
+            liEdit.remove();
+            if(count !== 1){
+                count--;
+            }            
+        }
+    })
+    
+    function displayExpense(){
+        for(let i=0;i<localStorage.length;i++){
+            const key = localStorage.key(i);
+            const userData = JSON.parse(localStorage.getItem(key));
+            addExpense(userData);
+        }
+        if(localStorage.length === 0){
+            count = 1;
+        }else{
+            count++;
+        }
     }
-}
 
-window.addEventListener("load",() =>{
-    displayUsers();
+    window.addEventListener('load',()=>{
+        displayExpense();
+    })
 })
